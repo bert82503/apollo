@@ -16,7 +16,7 @@ sh scripts/build.sh
 # 运行Apollo
 
 ```shell
-sh ./src/main/scripts/startup.sh
+sh src/main/scripts/startup.sh
 # $SERVICE_NAME".jar"
 ```
 
@@ -25,21 +25,21 @@ sh ./src/main/scripts/startup.sh
 
 ```shell
 cd ~/Documents/workspace/apollo/apollo-configservice
-nohup java -jar target/apollo-configservice-2.3.0.jar > ./nohup.out & 
+nohup java -jar target/apollo-configservice-2.3.0.jar > nohup.out & 
 tail -f nohup.out 
 ```
 
 ## 管理员服务
 ```shell
 cd ~/Documents/workspace/apollo/apollo-adminservice
-nohup java -jar target/apollo-adminservice-2.3.0.jar > ./nohup.out & 
+nohup java -jar target/apollo-adminservice-2.3.0.jar > nohup.out & 
 tail -f nohup.out 
 ```
 
 ## 控制台服务
 ```shell
 cd ~/Documents/workspace/apollo/apollo-portal
-nohup java -jar target/apollo-portal-2.3.0.jar > ./nohup.out & 
+nohup java -jar target/apollo-portal-2.3.0.jar > nohup.out & 
 tail -f nohup.out 
 ```
 
@@ -50,7 +50,7 @@ kill -15 $PID
 ```
 
 ```shell
-sh ./src/main/scripts/shutdown.sh
+sh src/main/scripts/shutdown.sh
 # $SERVICE_NAME".jar"
 ```
 

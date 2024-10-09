@@ -1,0 +1,63 @@
+
+     _                _ _
+    / \   _ __   ___ | | | ___
+   / _ \ | '_ \ / _ \| | |/ _ \
+  / ___ \| |_) | (_) | | | (_) |
+ /_/   \_\ .__/ \___/|_|_|\___/
+         |_|
+
+:: Spring Boot ::  (v2.7.11)
+
+-- 配置服务应用
+2024-09-05 16:07:22.887  INFO 79049 --- [           main] c.c.f.a.c.ConfigServiceApplication       : Starting ConfigServiceApplication v2.3.0 using Java 1.8.0_421 on lihuagangdebijibendiannao.local with PID 79049 (/Users/lihuagang/Documents/workspace/apollo/apollo-configservice/target/apollo-configservice-2.3.0.jar started by lihuagang in /Users/lihuagang/Documents/workspace/apollo/apollo-configservice)
+2024-09-05 16:07:22.925  INFO 79049 --- [           main] c.c.f.a.c.ConfigServiceApplication       : The following 3 profiles are active: "github", "mysql", "database-discovery"
+2024-09-05 16:07:23.984  INFO 79049 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-09-05 16:07:24.207  INFO 79049 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 178 ms. Found 18 JPA repository interfaces.
+2024-09-05 16:07:24.422  INFO 79049 --- [           main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=3e75fd50-479f-3cda-8833-0e9138232a6b
+-- Tomcat，localhost:8080
+2024-09-05 16:07:24.893  INFO 79049 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2024-09-05 16:07:24.902  INFO 79049 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-09-05 16:07:24.902  INFO 79049 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.74]
+2024-09-05 16:07:25.014  INFO 79049 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-09-05 16:07:25.014  INFO 79049 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2046 ms
+-- 数据源，初始化
+2024-09-05 16:07:25.125  INFO 79049 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-09-05 16:07:25.261  INFO 79049 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+-- Hibernate ORM
+2024-09-05 16:07:25.311  INFO 79049 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-09-05 16:07:25.360  INFO 79049 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.15.Final
+2024-09-05 16:07:25.541  INFO 79049 --- [           main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2024-09-05 16:07:25.632  INFO 79049 --- [           main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2024-09-05 16:07:25.706  WARN 79049 --- [           main] org.hibernate.cfg.AnnotationBinder       : HHH000503: A class should not be annotated with both @Inheritance and @MappedSuperclass. @Inheritance will be ignored for: com.ctrip.framework.apollo.common.entity.BaseEntity.
+2024-09-05 16:07:26.368  INFO 79049 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2024-09-05 16:07:26.376  INFO 79049 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+-- 应用ID(app.id)、应用标签(app.label)、环境(env)
+2024-09-05 16:07:26.860  WARN 79049 --- [           main] c.c.f.f.i.p.DefaultApplicationProvider   : app.id is not available from System Property and /META-INF/app.properties. It is set to null
+2024-09-05 16:07:26.860  WARN 79049 --- [           main] c.c.f.f.i.p.DefaultApplicationProvider   : app.label is not available from System Property and /META-INF/app.properties. It is set to null
+2024-09-05 16:07:26.861  INFO 79049 --- [           main] c.c.f.f.i.p.DefaultServerProvider        : Environment is set to null. Because it is not available in either (1) JVM system property 'env', (2) OS env variable 'ENV' nor (3) property 'env' from the properties InputStream.
+-- 从数据库加载配置属性源
+2024-09-05 16:07:26.861  INFO 79049 --- [           main] c.c.f.a.biz.service.BizDBPropertySource  : Load config from DB : item.key.length.limit = 128
+2024-09-05 16:07:26.861  INFO 79049 --- [           main] c.c.f.a.biz.service.BizDBPropertySource  : Load config from DB : item.value.length.limit = 20000
+2024-09-05 16:07:26.861  INFO 79049 --- [           main] c.c.f.a.biz.service.BizDBPropertySource  : Load config from DB : eureka.service.url = http://localhost:8080/eureka/
+2024-09-05 16:07:26.861  INFO 79049 --- [           main] c.c.f.a.biz.service.BizDBPropertySource  : Load config from DB : namespace.lock.switch = false
+2024-09-05 16:07:26.861  INFO 79049 --- [           main] c.c.f.a.biz.service.BizDBPropertySource  : Load config from DB : config-service.cache.enabled = false
+2024-09-05 16:07:27.236  INFO 79049 --- [           main] c.c.f.a.c.s.AccessKeyServiceWithCache    : Loaded 1 new/updated Accesskey from startTime Thu Jan 01 08:00:00 CST 1970
+2024-09-05 16:07:27.368  WARN 79049 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+-- 应用的命名空间
+2024-09-05 16:07:27.461  INFO 79049 --- [           main] c.c.f.a.c.s.AppNamespaceServiceWithCache : Loaded 2 new app namespaces with startId 3
+2024-09-05 16:07:27.498  INFO 79049 --- [           main] c.f.a.c.s.ReleaseMessageServiceWithCache : Loaded 2 release messages with startId 7
+2024-09-05 16:07:27.641  INFO 79049 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@3e03046d, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@9b3be1c, org.springframework.security.web.context.SecurityContextPersistenceFilter@5b0902b4, org.springframework.security.web.header.HeaderWriterFilter@4dd2ef54, org.springframework.security.web.authentication.logout.LogoutFilter@66756662, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@40d96578, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2f04993d, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@c14e5a5, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@74e497ae, org.springframework.security.web.session.SessionManagementFilter@23ee2ccf, org.springframework.security.web.access.ExceptionTranslationFilter@7708b66a]
+2024-09-05 16:07:27.642  INFO 79049 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@1578fa9, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@414b2df5, org.springframework.security.web.context.SecurityContextPersistenceFilter@569348e1, org.springframework.security.web.header.HeaderWriterFilter@37314843, org.springframework.security.web.authentication.logout.LogoutFilter@4db0ba1c, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@1d91fa02, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7db5b890, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@407b8435, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@9e30f9a, org.springframework.security.web.session.SessionManagementFilter@50122012, org.springframework.security.web.access.ExceptionTranslationFilter@1537c744]
+2024-09-05 16:07:28.049  INFO 79049 --- [           main] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses Jersey
+2024-09-05 16:07:28.108  WARN 79049 --- [           main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2024-09-05 16:07:28.111  INFO 79049 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 4 endpoint(s) beneath base path ''
+2024-09-05 16:07:28.146  INFO 79049 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+-- 应用启动完成
+2024-09-05 16:07:28.167  INFO 79049 --- [           main] c.c.f.a.c.ConfigServiceApplication       : Started ConfigServiceApplication in 5.714 seconds (JVM running for 6.247)
+-- 注册心跳到数据库
+2024-09-05 16:07:28.185  INFO 79049 --- [           main] erviceRegistryHeartbeatApplicationRunner : register to database. 'apollo-configservice': uri 'http://172.16.22.50:8080/', cluster 'default' 
+
+2024-09-05 16:15:11.505  INFO 79049 --- [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-09-05 16:15:11.505  INFO 79049 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-09-05 16:15:11.510  INFO 79049 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 5 ms
+

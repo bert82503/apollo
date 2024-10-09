@@ -16,7 +16,7 @@
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
@@ -33,7 +33,7 @@
 -- 
 -- Create Database
 -- ------------------------------------------------------------
-CREATE DATABASE IF NOT EXISTS ApolloPortalDB DEFAULT CHARACTER SET = utf8mb4;
+CREATE DATABASE IF NOT EXISTS ApolloPortalDB DEFAULT CHARACTER SET = utf8mb4 DEFAULT COLLATE = utf8mb4_bin;
 
 Use ApolloPortalDB;
 
@@ -43,7 +43,7 @@ Use ApolloPortalDB;
 DROP TABLE IF EXISTS `App`;
 
 CREATE TABLE `App` (
-  `Id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `Id` BIGINT(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
   `AppId` varchar(64) NOT NULL DEFAULT 'default' COMMENT 'AppID',
   `Name` varchar(500) NOT NULL DEFAULT 'default' COMMENT '应用名',
   `OrgId` varchar(32) NOT NULL DEFAULT 'default' COMMENT '部门Id',
@@ -70,7 +70,7 @@ CREATE TABLE `App` (
 DROP TABLE IF EXISTS `AppNamespace`;
 
 CREATE TABLE `AppNamespace` (
-  `Id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增主键',
+  `Id` BIGINT(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增主键',
   `Name` varchar(32) NOT NULL DEFAULT '' COMMENT 'namespace名字，注意，需要全局唯一',
   `AppId` varchar(64) NOT NULL DEFAULT '' COMMENT 'app id',
   `Format` varchar(32) NOT NULL DEFAULT 'properties' COMMENT 'namespace的format类型',
@@ -96,7 +96,7 @@ CREATE TABLE `AppNamespace` (
 DROP TABLE IF EXISTS `Consumer`;
 
 CREATE TABLE `Consumer` (
-  `Id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增Id',
+  `Id` BIGINT(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增Id',
   `AppId` varchar(64) NOT NULL DEFAULT 'default' COMMENT 'AppID',
   `Name` varchar(500) NOT NULL DEFAULT 'default' COMMENT '应用名',
   `OrgId` varchar(32) NOT NULL DEFAULT 'default' COMMENT '部门Id',
@@ -122,8 +122,8 @@ CREATE TABLE `Consumer` (
 DROP TABLE IF EXISTS `ConsumerAudit`;
 
 CREATE TABLE `ConsumerAudit` (
-  `Id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增Id',
-  `ConsumerId` int(11) unsigned DEFAULT NULL COMMENT 'Consumer Id',
+  `Id` BIGINT(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增Id',
+  `ConsumerId` BIGINT(20) unsigned DEFAULT NULL COMMENT 'Consumer Id',
   `Uri` varchar(1024) NOT NULL DEFAULT '' COMMENT '访问的Uri',
   `Method` varchar(16) NOT NULL DEFAULT '' COMMENT '访问的Method',
   `DataChange_CreatedTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -141,9 +141,9 @@ CREATE TABLE `ConsumerAudit` (
 DROP TABLE IF EXISTS `ConsumerRole`;
 
 CREATE TABLE `ConsumerRole` (
-  `Id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增Id',
-  `ConsumerId` int(11) unsigned DEFAULT NULL COMMENT 'Consumer Id',
-  `RoleId` int(10) unsigned DEFAULT NULL COMMENT 'Role Id',
+  `Id` BIGINT(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增Id',
+  `ConsumerId` BIGINT(20) unsigned DEFAULT NULL COMMENT 'Consumer Id',
+  `RoleId` BIGINT(20) unsigned DEFAULT NULL COMMENT 'Role Id',
   `IsDeleted` bit(1) NOT NULL DEFAULT b'0' COMMENT '1: deleted, 0: normal',
   `DeletedAt` BIGINT(20) NOT NULL DEFAULT '0' COMMENT 'Delete timestamp based on milliseconds',
   `DataChange_CreatedBy` varchar(64) NOT NULL DEFAULT 'default' COMMENT '创建人邮箱前缀',
@@ -164,8 +164,8 @@ CREATE TABLE `ConsumerRole` (
 DROP TABLE IF EXISTS `ConsumerToken`;
 
 CREATE TABLE `ConsumerToken` (
-  `Id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增Id',
-  `ConsumerId` int(11) unsigned DEFAULT NULL COMMENT 'ConsumerId',
+  `Id` BIGINT(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增Id',
+  `ConsumerId` BIGINT(20) unsigned DEFAULT NULL COMMENT 'ConsumerId',
   `Token` varchar(128) NOT NULL DEFAULT '' COMMENT 'token',
   `Expires` datetime NOT NULL DEFAULT '2099-01-01 00:00:00' COMMENT 'token失效时间',
   `IsDeleted` bit(1) NOT NULL DEFAULT b'0' COMMENT '1: deleted, 0: normal',
@@ -185,10 +185,10 @@ CREATE TABLE `ConsumerToken` (
 DROP TABLE IF EXISTS `Favorite`;
 
 CREATE TABLE `Favorite` (
-  `Id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `Id` BIGINT(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
   `UserId` varchar(32) NOT NULL DEFAULT 'default' COMMENT '收藏的用户',
   `AppId` varchar(64) NOT NULL DEFAULT 'default' COMMENT 'AppID',
-  `Position` int(32) NOT NULL DEFAULT '10000' COMMENT '收藏顺序',
+  `Position` BIGINT(20) NOT NULL DEFAULT '10000' COMMENT '收藏顺序',
   `IsDeleted` bit(1) NOT NULL DEFAULT b'0' COMMENT '1: deleted, 0: normal',
   `DeletedAt` BIGINT(20) NOT NULL DEFAULT '0' COMMENT 'Delete timestamp based on milliseconds',
   `DataChange_CreatedBy` varchar(64) NOT NULL DEFAULT 'default' COMMENT '创建人邮箱前缀',
@@ -207,7 +207,7 @@ CREATE TABLE `Favorite` (
 DROP TABLE IF EXISTS `Permission`;
 
 CREATE TABLE `Permission` (
-  `Id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增Id',
+  `Id` BIGINT(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增Id',
   `PermissionType` varchar(32) NOT NULL DEFAULT '' COMMENT '权限类型',
   `TargetId` varchar(256) NOT NULL DEFAULT '' COMMENT '权限对象类型',
   `IsDeleted` bit(1) NOT NULL DEFAULT b'0' COMMENT '1: deleted, 0: normal',
@@ -229,7 +229,7 @@ CREATE TABLE `Permission` (
 DROP TABLE IF EXISTS `Role`;
 
 CREATE TABLE `Role` (
-  `Id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增Id',
+  `Id` BIGINT(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增Id',
   `RoleName` varchar(256) NOT NULL DEFAULT '' COMMENT 'Role name',
   `IsDeleted` bit(1) NOT NULL DEFAULT b'0' COMMENT '1: deleted, 0: normal',
   `DeletedAt` BIGINT(20) NOT NULL DEFAULT '0' COMMENT 'Delete timestamp based on milliseconds',
@@ -250,9 +250,9 @@ CREATE TABLE `Role` (
 DROP TABLE IF EXISTS `RolePermission`;
 
 CREATE TABLE `RolePermission` (
-  `Id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增Id',
-  `RoleId` int(10) unsigned DEFAULT NULL COMMENT 'Role Id',
-  `PermissionId` int(10) unsigned DEFAULT NULL COMMENT 'Permission Id',
+  `Id` BIGINT(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增Id',
+  `RoleId` BIGINT(20) unsigned DEFAULT NULL COMMENT 'Role Id',
+  `PermissionId` BIGINT(20) unsigned DEFAULT NULL COMMENT 'Permission Id',
   `IsDeleted` bit(1) NOT NULL DEFAULT b'0' COMMENT '1: deleted, 0: normal',
   `DeletedAt` BIGINT(20) NOT NULL DEFAULT '0' COMMENT 'Delete timestamp based on milliseconds',
   `DataChange_CreatedBy` varchar(64) NOT NULL DEFAULT 'default' COMMENT '创建人邮箱前缀',
@@ -273,7 +273,7 @@ CREATE TABLE `RolePermission` (
 DROP TABLE IF EXISTS `ServerConfig`;
 
 CREATE TABLE `ServerConfig` (
-  `Id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增Id',
+  `Id` BIGINT(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增Id',
   `Key` varchar(64) NOT NULL DEFAULT 'default' COMMENT '配置项Key',
   `Value` varchar(2048) NOT NULL DEFAULT 'default' COMMENT '配置项值',
   `Comment` varchar(1024) DEFAULT '' COMMENT '注释',
@@ -296,9 +296,9 @@ CREATE TABLE `ServerConfig` (
 DROP TABLE IF EXISTS `UserRole`;
 
 CREATE TABLE `UserRole` (
-  `Id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增Id',
+  `Id` BIGINT(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增Id',
   `UserId` varchar(128) DEFAULT '' COMMENT '用户身份标识',
-  `RoleId` int(10) unsigned DEFAULT NULL COMMENT 'Role Id',
+  `RoleId` BIGINT(20) unsigned DEFAULT NULL COMMENT 'Role Id',
   `IsDeleted` bit(1) NOT NULL DEFAULT b'0' COMMENT '1: deleted, 0: normal',
   `DeletedAt` BIGINT(20) NOT NULL DEFAULT '0' COMMENT 'Delete timestamp based on milliseconds',
   `DataChange_CreatedBy` varchar(64) NOT NULL DEFAULT 'default' COMMENT '创建人邮箱前缀',
@@ -317,7 +317,7 @@ CREATE TABLE `UserRole` (
 DROP TABLE IF EXISTS `Users`;
 
 CREATE TABLE `Users` (
-  `Id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增Id',
+  `Id` BIGINT(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增Id',
   `Username` varchar(64) NOT NULL DEFAULT 'default' COMMENT '用户登录账户',
   `Password` varchar(512) NOT NULL DEFAULT 'default' COMMENT '密码',
   `UserDisplayName` varchar(512) NOT NULL DEFAULT 'default' COMMENT '用户名称',
@@ -334,7 +334,7 @@ CREATE TABLE `Users` (
 DROP TABLE IF EXISTS `Authorities`;
 
 CREATE TABLE `Authorities` (
-  `Id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增Id',
+  `Id` BIGINT(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增Id',
   `Username` varchar(64) NOT NULL,
   `Authority` varchar(50) NOT NULL,
   PRIMARY KEY (`Id`)
@@ -379,7 +379,7 @@ CREATE TABLE `SPRING_SESSION_ATTRIBUTES` (
 DROP TABLE IF EXISTS `AuditLog`;
 
 CREATE TABLE `AuditLog` (
-  `Id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `Id` BIGINT(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
   `TraceId` varchar(32) NOT NULL DEFAULT '' COMMENT '链路全局唯一ID',
   `SpanId` varchar(32) NOT NULL DEFAULT '' COMMENT '跨度ID',
   `ParentSpanId` varchar(32) DEFAULT NULL COMMENT '父跨度ID',
@@ -407,7 +407,7 @@ CREATE TABLE `AuditLog` (
 DROP TABLE IF EXISTS `AuditLogDataInfluence`;
 
 CREATE TABLE `AuditLogDataInfluence` (
-  `Id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `Id` BIGINT(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
   `SpanId` char(32) NOT NULL DEFAULT '' COMMENT '跨度ID',
   `InfluenceEntityId` varchar(50) NOT NULL DEFAULT '0' COMMENT '记录ID',
   `InfluenceEntityName` varchar(50) NOT NULL DEFAULT 'default' COMMENT '表名',
@@ -443,6 +443,29 @@ VALUES
 INSERT INTO `Users` (`Username`, `Password`, `UserDisplayName`, `Email`, `Enabled`)
 VALUES
 	('apollo', '$2a$10$7r20uS.BQ9uBpf3Baj3uQOZvMVvB1RN3PYoKE94gtz2.WAOuiiwXS', 'apollo', 'apollo@acme.com', 1);
+
+INSERT INTO ApolloPortalDB.UserRole (UserId, RoleId, IsDeleted, DeletedAt, DataChange_CreatedBy, DataChange_CreatedTime, DataChange_LastModifiedBy, DataChange_LastTime) VALUES ('apollo', 2, false, 0, 'apollo', '2024-09-04 15:37:52', 'apollo', '2024-09-04 15:37:52');
+INSERT INTO ApolloPortalDB.UserRole (UserId, RoleId, IsDeleted, DeletedAt, DataChange_CreatedBy, DataChange_CreatedTime, DataChange_LastModifiedBy, DataChange_LastTime) VALUES ('apollo', 3, false, 0, 'apollo', '2024-09-05 00:30:11', 'apollo', '2024-09-05 00:30:11');
+INSERT INTO ApolloPortalDB.UserRole (UserId, RoleId, IsDeleted, DeletedAt, DataChange_CreatedBy, DataChange_CreatedTime, DataChange_LastModifiedBy, DataChange_LastTime) VALUES ('apollo', 6, false, 0, 'apollo', '2024-09-05 00:30:11', 'apollo', '2024-09-05 00:30:11');
+INSERT INTO ApolloPortalDB.UserRole (UserId, RoleId, IsDeleted, DeletedAt, DataChange_CreatedBy, DataChange_CreatedTime, DataChange_LastModifiedBy, DataChange_LastTime) VALUES ('apollo', 7, false, 0, 'apollo', '2024-09-05 00:30:11', 'apollo', '2024-09-05 00:30:11');
+
+INSERT INTO `Users` (`Username`, `Password`, `UserDisplayName`, `Email`, `Enabled`)
+VALUES
+    ('lihuagang', '$2a$10$7r20uS.BQ9uBpf3Baj3uQOZvMVvB1RN3PYoKE94gtz2.WAOuiiwXS', 'lihuagang', 'apollo@acme.com', 1);
+
+INSERT INTO ApolloPortalDB.UserRole (UserId, RoleId, IsDeleted, DeletedAt, DataChange_CreatedBy, DataChange_CreatedTime, DataChange_LastModifiedBy, DataChange_LastTime) VALUES ('lihuagang', 1, false, 0, 'apollo', '2024-09-04 15:37:52', 'apollo', '2024-09-04 15:37:52');
+INSERT INTO ApolloPortalDB.UserRole (UserId, RoleId, IsDeleted, DeletedAt, DataChange_CreatedBy, DataChange_CreatedTime, DataChange_LastModifiedBy, DataChange_LastTime) VALUES ('lihuagang', 16, false, 0, 'apollo', '2024-09-05 00:30:11', 'apollo', '2024-09-05 00:30:11');
+INSERT INTO ApolloPortalDB.UserRole (UserId, RoleId, IsDeleted, DeletedAt, DataChange_CreatedBy, DataChange_CreatedTime, DataChange_LastModifiedBy, DataChange_LastTime) VALUES ('lihuagang', 18, false, 0, 'apollo', '2024-09-05 00:30:11', 'apollo', '2024-09-05 00:30:11');
+INSERT INTO ApolloPortalDB.UserRole (UserId, RoleId, IsDeleted, DeletedAt, DataChange_CreatedBy, DataChange_CreatedTime, DataChange_LastModifiedBy, DataChange_LastTime) VALUES ('lihuagang', 19, false, 0, 'apollo', '2024-09-05 00:30:11', 'apollo', '2024-09-05 00:30:11');
+
+INSERT INTO `Users` (`Username`, `Password`, `UserDisplayName`, `Email`, `Enabled`)
+VALUES
+    ('sentinel-dashboard', '$2a$10$7r20uS.BQ9uBpf3Baj3uQOZvMVvB1RN3PYoKE94gtz2.WAOuiiwXS', 'sentinel-dashboard', 'apollo@acme.com', 1);
+
+INSERT INTO ApolloPortalDB.UserRole (UserId, RoleId, IsDeleted, DeletedAt, DataChange_CreatedBy, DataChange_CreatedTime, DataChange_LastModifiedBy, DataChange_LastTime) VALUES ('sentinel-dashboard', 1, false, 0, 'apollo', '2024-09-04 15:37:52', 'apollo', '2024-09-04 15:37:52');
+INSERT INTO ApolloPortalDB.UserRole (UserId, RoleId, IsDeleted, DeletedAt, DataChange_CreatedBy, DataChange_CreatedTime, DataChange_LastModifiedBy, DataChange_LastTime) VALUES ('sentinel-dashboard', 16, false, 0, 'apollo', '2024-09-05 00:30:11', 'apollo', '2024-09-05 00:30:11');
+INSERT INTO ApolloPortalDB.UserRole (UserId, RoleId, IsDeleted, DeletedAt, DataChange_CreatedBy, DataChange_CreatedTime, DataChange_LastModifiedBy, DataChange_LastTime) VALUES ('sentinel-dashboard', 18, false, 0, 'apollo', '2024-09-05 00:30:11', 'apollo', '2024-09-05 00:30:11');
+INSERT INTO ApolloPortalDB.UserRole (UserId, RoleId, IsDeleted, DeletedAt, DataChange_CreatedBy, DataChange_CreatedTime, DataChange_LastModifiedBy, DataChange_LastTime) VALUES ('sentinel-dashboard', 19, false, 0, 'apollo', '2024-09-05 00:30:11', 'apollo', '2024-09-05 00:30:11');
 
 INSERT INTO `Authorities` (`Username`, `Authority`) VALUES ('apollo', 'ROLE_user');
 

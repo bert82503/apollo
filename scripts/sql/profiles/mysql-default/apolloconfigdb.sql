@@ -16,7 +16,7 @@
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
@@ -33,7 +33,7 @@
 -- 
 -- Create Database
 -- ------------------------------------------------------------
-CREATE DATABASE IF NOT EXISTS ApolloConfigDB DEFAULT CHARACTER SET = utf8mb4;
+CREATE DATABASE IF NOT EXISTS ApolloConfigDB DEFAULT CHARACTER SET = utf8mb4 DEFAULT COLLATE = utf8mb4_bin;
 
 Use ApolloConfigDB;
 
@@ -43,7 +43,7 @@ Use ApolloConfigDB;
 DROP TABLE IF EXISTS `App`;
 
 CREATE TABLE `App` (
-  `Id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `Id` BIGINT(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
   `AppId` varchar(64) NOT NULL DEFAULT 'default' COMMENT 'AppID',
   `Name` varchar(500) NOT NULL DEFAULT 'default' COMMENT '应用名',
   `OrgId` varchar(32) NOT NULL DEFAULT 'default' COMMENT '部门Id',
@@ -70,7 +70,7 @@ CREATE TABLE `App` (
 DROP TABLE IF EXISTS `AppNamespace`;
 
 CREATE TABLE `AppNamespace` (
-  `Id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增主键',
+  `Id` BIGINT(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增主键',
   `Name` varchar(32) NOT NULL DEFAULT '' COMMENT 'namespace名字，注意，需要全局唯一',
   `AppId` varchar(64) NOT NULL DEFAULT '' COMMENT 'app id',
   `Format` varchar(32) NOT NULL DEFAULT 'properties' COMMENT 'namespace的format类型',
@@ -96,9 +96,9 @@ CREATE TABLE `AppNamespace` (
 DROP TABLE IF EXISTS `Audit`;
 
 CREATE TABLE `Audit` (
-  `Id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `Id` BIGINT(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
   `EntityName` varchar(50) NOT NULL DEFAULT 'default' COMMENT '表名',
-  `EntityId` int(10) unsigned DEFAULT NULL COMMENT '记录ID',
+  `EntityId` BIGINT(20) unsigned DEFAULT NULL COMMENT '记录ID',
   `OpName` varchar(50) NOT NULL DEFAULT 'default' COMMENT '操作类型',
   `Comment` varchar(500) DEFAULT NULL COMMENT '备注',
   `IsDeleted` bit(1) NOT NULL DEFAULT b'0' COMMENT '1: deleted, 0: normal',
@@ -119,10 +119,10 @@ CREATE TABLE `Audit` (
 DROP TABLE IF EXISTS `Cluster`;
 
 CREATE TABLE `Cluster` (
-  `Id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增主键',
+  `Id` BIGINT(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增主键',
   `Name` varchar(32) NOT NULL DEFAULT '' COMMENT '集群名字',
   `AppId` varchar(64) NOT NULL DEFAULT '' COMMENT 'App id',
-  `ParentClusterId` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '父cluster',
+  `ParentClusterId` BIGINT(20) unsigned NOT NULL DEFAULT '0' COMMENT '父cluster',
   `Comment` varchar(64) DEFAULT NULL COMMENT '备注',
   `IsDeleted` bit(1) NOT NULL DEFAULT b'0' COMMENT '1: deleted, 0: normal',
   `DeletedAt` BIGINT(20) NOT NULL DEFAULT '0' COMMENT 'Delete timestamp based on milliseconds',
@@ -144,7 +144,7 @@ CREATE TABLE `Cluster` (
 DROP TABLE IF EXISTS `Commit`;
 
 CREATE TABLE `Commit` (
-  `Id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `Id` BIGINT(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
   `ChangeSets` longtext NOT NULL COMMENT '修改变更集',
   `AppId` varchar(64) NOT NULL DEFAULT 'default' COMMENT 'AppID',
   `ClusterName` varchar(500) NOT NULL DEFAULT 'default' COMMENT 'ClusterName',
@@ -169,13 +169,13 @@ CREATE TABLE `Commit` (
 DROP TABLE IF EXISTS `GrayReleaseRule`;
 
 CREATE TABLE `GrayReleaseRule` (
-  `Id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `Id` BIGINT(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
   `AppId` varchar(64) NOT NULL DEFAULT 'default' COMMENT 'AppID',
   `ClusterName` varchar(32) NOT NULL DEFAULT 'default' COMMENT 'Cluster Name',
   `NamespaceName` varchar(32) NOT NULL DEFAULT 'default' COMMENT 'Namespace Name',
   `BranchName` varchar(32) NOT NULL DEFAULT 'default' COMMENT 'branch name',
   `Rules` varchar(16000) DEFAULT '[]' COMMENT '灰度规则',
-  `ReleaseId` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '灰度对应的release',
+  `ReleaseId` BIGINT(20) unsigned NOT NULL DEFAULT '0' COMMENT '灰度对应的release',
   `BranchStatus` tinyint(2) DEFAULT '1' COMMENT '灰度分支状态: 0:删除分支,1:正在使用的规则 2：全量发布',
   `IsDeleted` bit(1) NOT NULL DEFAULT b'0' COMMENT '1: deleted, 0: normal',
   `DeletedAt` BIGINT(20) NOT NULL DEFAULT '0' COMMENT 'Delete timestamp based on milliseconds',
@@ -195,7 +195,7 @@ CREATE TABLE `GrayReleaseRule` (
 DROP TABLE IF EXISTS `Instance`;
 
 CREATE TABLE `Instance` (
-  `Id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增Id',
+  `Id` BIGINT(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增Id',
   `AppId` varchar(64) NOT NULL DEFAULT 'default' COMMENT 'AppID',
   `ClusterName` varchar(32) NOT NULL DEFAULT 'default' COMMENT 'ClusterName',
   `DataCenter` varchar(64) NOT NULL DEFAULT 'default' COMMENT 'Data Center Name',
@@ -216,8 +216,8 @@ CREATE TABLE `Instance` (
 DROP TABLE IF EXISTS `InstanceConfig`;
 
 CREATE TABLE `InstanceConfig` (
-  `Id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增Id',
-  `InstanceId` int(11) unsigned DEFAULT NULL COMMENT 'Instance Id',
+  `Id` BIGINT(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增Id',
+  `InstanceId` BIGINT(20) unsigned DEFAULT NULL COMMENT 'Instance Id',
   `ConfigAppId` varchar(64) NOT NULL DEFAULT 'default' COMMENT 'Config App Id',
   `ConfigClusterName` varchar(32) NOT NULL DEFAULT 'default' COMMENT 'Config Cluster Name',
   `ConfigNamespaceName` varchar(32) NOT NULL DEFAULT 'default' COMMENT 'Config Namespace Name',
@@ -240,8 +240,8 @@ CREATE TABLE `InstanceConfig` (
 DROP TABLE IF EXISTS `Item`;
 
 CREATE TABLE `Item` (
-  `Id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增Id',
-  `NamespaceId` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '集群NamespaceId',
+  `Id` BIGINT(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增Id',
+  `NamespaceId` BIGINT(20) unsigned NOT NULL DEFAULT '0' COMMENT '集群NamespaceId',
   `Key` varchar(128) NOT NULL DEFAULT 'default' COMMENT '配置项Key',
   `Type` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '配置项类型，0: String，1: Number，2: Boolean，3: JSON',
   `Value` longtext NOT NULL COMMENT '配置项值',
@@ -266,7 +266,7 @@ CREATE TABLE `Item` (
 DROP TABLE IF EXISTS `Namespace`;
 
 CREATE TABLE `Namespace` (
-  `Id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增主键',
+  `Id` BIGINT(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增主键',
   `AppId` varchar(64) NOT NULL DEFAULT 'default' COMMENT 'AppID',
   `ClusterName` varchar(500) NOT NULL DEFAULT 'default' COMMENT 'Cluster Name',
   `NamespaceName` varchar(500) NOT NULL DEFAULT 'default' COMMENT 'Namespace Name',
@@ -290,8 +290,8 @@ CREATE TABLE `Namespace` (
 DROP TABLE IF EXISTS `NamespaceLock`;
 
 CREATE TABLE `NamespaceLock` (
-  `Id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增id',
-  `NamespaceId` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '集群NamespaceId',
+  `Id` BIGINT(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增id',
+  `NamespaceId` BIGINT(20) unsigned NOT NULL DEFAULT '0' COMMENT '集群NamespaceId',
   `DataChange_CreatedBy` varchar(64) NOT NULL DEFAULT 'default' COMMENT '创建人邮箱前缀',
   `DataChange_CreatedTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `DataChange_LastModifiedBy` varchar(64) DEFAULT '' COMMENT '最后修改人邮箱前缀',
@@ -311,7 +311,7 @@ CREATE TABLE `NamespaceLock` (
 DROP TABLE IF EXISTS `Release`;
 
 CREATE TABLE `Release` (
-  `Id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增主键',
+  `Id` BIGINT(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增主键',
   `ReleaseKey` varchar(64) NOT NULL DEFAULT '' COMMENT '发布的Key',
   `Name` varchar(64) NOT NULL DEFAULT 'default' COMMENT '发布名字',
   `Comment` varchar(256) DEFAULT NULL COMMENT '发布说明',
@@ -339,13 +339,13 @@ CREATE TABLE `Release` (
 DROP TABLE IF EXISTS `ReleaseHistory`;
 
 CREATE TABLE `ReleaseHistory` (
-  `Id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增Id',
+  `Id` BIGINT(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增Id',
   `AppId` varchar(64) NOT NULL DEFAULT 'default' COMMENT 'AppID',
   `ClusterName` varchar(32) NOT NULL DEFAULT 'default' COMMENT 'ClusterName',
   `NamespaceName` varchar(32) NOT NULL DEFAULT 'default' COMMENT 'namespaceName',
   `BranchName` varchar(32) NOT NULL DEFAULT 'default' COMMENT '发布分支名',
-  `ReleaseId` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '关联的Release Id',
-  `PreviousReleaseId` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '前一次发布的ReleaseId',
+  `ReleaseId` BIGINT(20) unsigned NOT NULL DEFAULT '0' COMMENT '关联的Release Id',
+  `PreviousReleaseId` BIGINT(20) unsigned NOT NULL DEFAULT '0' COMMENT '前一次发布的ReleaseId',
   `Operation` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '发布类型，0: 普通发布，1: 回滚，2: 灰度发布，3: 灰度规则更新，4: 灰度合并回主分支发布，5: 主分支发布灰度自动发布，6: 主分支回滚灰度自动发布，7: 放弃灰度',
   `OperationContext` longtext NOT NULL COMMENT '发布上下文信息',
   `IsDeleted` bit(1) NOT NULL DEFAULT b'0' COMMENT '1: deleted, 0: normal',
@@ -368,7 +368,7 @@ CREATE TABLE `ReleaseHistory` (
 DROP TABLE IF EXISTS `ReleaseMessage`;
 
 CREATE TABLE `ReleaseMessage` (
-  `Id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增主键',
+  `Id` BIGINT(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增主键',
   `Message` varchar(1024) NOT NULL DEFAULT '' COMMENT '发布的消息内容',
   `DataChange_LastTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后修改时间',
   PRIMARY KEY (`Id`),
@@ -384,7 +384,7 @@ CREATE TABLE `ReleaseMessage` (
 DROP TABLE IF EXISTS `ServerConfig`;
 
 CREATE TABLE `ServerConfig` (
-  `Id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增Id',
+  `Id` BIGINT(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增Id',
   `Key` varchar(64) NOT NULL DEFAULT 'default' COMMENT '配置项Key',
   `Cluster` varchar(32) NOT NULL DEFAULT 'default' COMMENT '配置对应的集群，default为不针对特定的集群',
   `Value` varchar(2048) NOT NULL DEFAULT 'default' COMMENT '配置项值',
@@ -406,7 +406,7 @@ CREATE TABLE `ServerConfig` (
 DROP TABLE IF EXISTS `AccessKey`;
 
 CREATE TABLE `AccessKey` (
-  `Id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增主键',
+  `Id` BIGINT(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增主键',
   `AppId` varchar(64) NOT NULL DEFAULT 'default' COMMENT 'AppID',
   `Secret` varchar(128) NOT NULL DEFAULT '' COMMENT 'Secret',
   `IsEnabled` bit(1) NOT NULL DEFAULT b'0' COMMENT '1: enabled, 0: disabled',
@@ -428,7 +428,7 @@ CREATE TABLE `AccessKey` (
 DROP TABLE IF EXISTS `ServiceRegistry`;
 
 CREATE TABLE `ServiceRegistry` (
-  `Id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '自增Id',
+  `Id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '自增Id',
   `ServiceName` VARCHAR(64) NOT NULL COMMENT '服务名',
   `Uri` VARCHAR(64) NOT NULL COMMENT '服务地址',
   `Cluster` VARCHAR(64) NOT NULL COMMENT '集群，可以用来标识apollo.cluster或者网络分区',
@@ -446,7 +446,7 @@ CREATE TABLE `ServiceRegistry` (
 DROP TABLE IF EXISTS `AuditLog`;
 
 CREATE TABLE `AuditLog` (
-  `Id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `Id` BIGINT(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
   `TraceId` varchar(32) NOT NULL DEFAULT '' COMMENT '链路全局唯一ID',
   `SpanId` varchar(32) NOT NULL DEFAULT '' COMMENT '跨度ID',
   `ParentSpanId` varchar(32) DEFAULT NULL COMMENT '父跨度ID',
@@ -474,7 +474,7 @@ CREATE TABLE `AuditLog` (
 DROP TABLE IF EXISTS `AuditLogDataInfluence`;
 
 CREATE TABLE `AuditLogDataInfluence` (
-  `Id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `Id` BIGINT(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
   `SpanId` char(32) NOT NULL DEFAULT '' COMMENT '跨度ID',
   `InfluenceEntityId` varchar(50) NOT NULL DEFAULT '0' COMMENT '记录ID',
   `InfluenceEntityName` varchar(50) NOT NULL DEFAULT 'default' COMMENT '表名',

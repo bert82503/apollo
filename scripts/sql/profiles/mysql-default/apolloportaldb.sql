@@ -430,7 +430,7 @@ CREATE TABLE `AuditLogDataInfluence` (
 -- ------------------------------------------------------------
 INSERT INTO `ServerConfig` (`Key`, `Value`, `Comment`)
 VALUES
-    ('apollo.portal.envs', 'dev', '可支持的环境列表'),
+    ('apollo.portal.envs', 'dev,fat,uat,pro', '可支持的环境列表'),
     ('organizations', '[{"orgId":"TEST1","orgName":"样例部门1"},{"orgId":"TEST2","orgName":"样例部门2"}]', '部门列表'),
     ('superAdmin', 'apollo', 'Portal超级管理员'),
     ('api.readTimeout', '10000', 'http接口read timeout'),
@@ -468,6 +468,8 @@ INSERT INTO ApolloPortalDB.UserRole (UserId, RoleId, IsDeleted, DeletedAt, DataC
 INSERT INTO ApolloPortalDB.UserRole (UserId, RoleId, IsDeleted, DeletedAt, DataChange_CreatedBy, DataChange_CreatedTime, DataChange_LastModifiedBy, DataChange_LastTime) VALUES ('sentinel-dashboard', 19, false, 0, 'apollo', '2024-09-05 00:30:11', 'apollo', '2024-09-05 00:30:11');
 
 INSERT INTO `Authorities` (`Username`, `Authority`) VALUES ('apollo', 'ROLE_user');
+INSERT INTO `Authorities` (`Username`, `Authority`) VALUES ('lihuagang', 'ROLE_user');
+INSERT INTO `Authorities` (`Username`, `Authority`) VALUES ('sentinel-dashboard', 'ROLE_user');
 
 -- 
 -- ===============================================================================
